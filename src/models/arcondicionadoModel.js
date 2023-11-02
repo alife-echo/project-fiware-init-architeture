@@ -36,12 +36,14 @@ var requestOptions = {
     redirect: 'follow'
   };
   
-  await fetch("http://localhost:1026/v2/entities", requestOptions)
-    .then(response => response.text())
-    .then(result => result)
-    .catch(error => error);
-
-
+  try {
+    const response = await fetch("http://localhost:1026/v2/entities", requestOptions)
+    const result = await response.text();
+    return { success: true, message: result };
+  }
+  catch(error){
+    return { success: false, message: error.message };
+  }
 }
-
 module.exports = createArcondicionado;
+

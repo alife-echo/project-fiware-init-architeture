@@ -13,7 +13,7 @@ const createServiceIot = async () => {
             "resource": "/iot/json"*/
             "apikey":      "4jggokgpepnvsb2uv4s40d59ov",
             "cbroker":     "http://orion:1026",
-            "entity_type": "Motion",
+            "entity_type": "Sensor",
             "resource":    "/iot/d"
           }
         ]
@@ -26,10 +26,13 @@ const createServiceIot = async () => {
         redirect: 'follow'
       };
       
-    return await  fetch("http://localhost:4041/iot/services", requestOptions)
-        .then(response => response.text())
-        .then(result => result)
-        .catch(error => error);
+      try {
+        const response = await fetch("http://localhost:4041/iot/services", requestOptions);
+        const result = await response.text();
+        return { success: true, message: result };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
 }
 
 module.exports = createServiceIot

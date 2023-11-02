@@ -9,10 +9,12 @@ const devices =  async () => {
         headers: myHeaders,
         redirect: 'follow'
       };
-      
- return   await  fetch("http://localhost:1026/v2/entities?options=keyValues&type=Motion", requestOptions)
-        .then(response => response.text())
-        .then(result => result)
-        .catch(error => error);
+      try {
+        const response = await  fetch("http://localhost:1026/v2/entities?options=keyValues&type=Sensor", requestOptions)
+        const result = await response.text();
+        return { success: true, message: JSON.parse(result)};
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
 }
 module.exports = devices

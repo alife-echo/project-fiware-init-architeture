@@ -12,7 +12,7 @@ const createDeviceSensor = async () => {
       {
         "device_id": "nitrogen_sensor_001",
         "entity_name": "urn:ngsi-ld:NitrogenSensor:001",
-        "entity_type": "Motion",
+        "entity_type": "Sensor",
         "transport": "HTTP",
         "attributes": [
           {
@@ -21,20 +21,7 @@ const createDeviceSensor = async () => {
             "type": "Number"
           }
         ],
-        "commands": [
-          {
-            "name": "start",
-            "type": "command"
-          },
-          {
-            "name": "stop",
-            "type": "command"
-          },
-          {
-            "name": "interval",
-            "type": "command"
-          }
-        ],
+      
         "static_attributes": [
           {
             "name": "refAirConditioning",
@@ -46,7 +33,7 @@ const createDeviceSensor = async () => {
       {
         "device_id": "pm25_pm10_sensor_001",
         "entity_name": "urn:ngsi-ld:PM25PM10Sensor:001",
-        "entity_type": "Motion",
+        "entity_type": "Sensor",
         "transport": "HTTP",
         "attributes": [
           {
@@ -60,20 +47,7 @@ const createDeviceSensor = async () => {
             "type": "Number"
           }
         ],
-        "commands": [
-          {
-            "name": "start",
-            "type": "command"
-          },
-          {
-            "name": "stop",
-            "type": "command"
-          },
-          {
-            "name": "interval",
-            "type": "command"
-          }
-        ],
+        
         "static_attributes": [
           {
             "name": "refAirConditioning",
@@ -85,7 +59,7 @@ const createDeviceSensor = async () => {
       {
         "device_id": "co2_sensor_001",
         "entity_name": "urn:ngsi-ld:CO2Sensor:001",
-        "entity_type": "Motion",
+        "entity_type": "Sensor",
         "transport": "HTTP",
         "attributes": [
           {
@@ -94,20 +68,7 @@ const createDeviceSensor = async () => {
             "type": "Number"
           }
         ],
-        "commands": [
-          {
-            "name": "start",
-            "type": "command"
-          },
-          {
-            "name": "stop",
-            "type": "command"
-          },
-          {
-            "name": "interval",
-            "type": "command"
-          }
-        ],
+       
         "static_attributes": [
           {
             "name": "refAirConditioning",
@@ -125,11 +86,21 @@ const createDeviceSensor = async () => {
     body: sensors,
     redirect: 'follow'
   };
-  
- return await fetch("http://localhost:4041/iot/devices", requestOptions)
-    .then(response => response.text())
-    .then(result => result)
-    .catch(error => error);
+
+  try {
+    const response = await fetch("http://localhost:4041/iot/devices", requestOptions);
+    const result = await response.text();
+    return { success: true, message: result };
+} catch (error) {
+    return { success: false, message: error.message };
+}
 }
 
 module.exports = createDeviceSensor
+
+
+
+
+
+
+

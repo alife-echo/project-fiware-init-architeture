@@ -12,11 +12,13 @@ const sendDataAgent = async (targetDevice,object) => {
         body: raw,
         redirect: 'follow'
       };
-      
-      return await fetch(`http://localhost:7896/iot/d?k=4jggokgpepnvsb2uv4s40d59ov&i=${targetDevice}`, requestOptions)
-        .then(response => response.text())
-        .then(result => {'Dados enviados'})
-        .catch(error =>  error);
+      try {
+        const response = await fetch(`http://localhost:7896/iot/d?k=4jggokgpepnvsb2uv4s40d59ov&i=${targetDevice}`, requestOptions)
+        const result = await response.text();
+        return { success: true, message: result };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
 
 }
 
